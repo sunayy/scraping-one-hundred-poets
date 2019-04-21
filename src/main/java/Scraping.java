@@ -22,14 +22,13 @@ public class Scraping {
             elementStream = Jsoup.connect(URL).get()
                         .select(WAKA_TABLE_SELECT)
                         .select("tr")
-                        .stream()
+                        .stream();
         } catch (IOException e) {
             System.out.println(e.getStackTrace());
             return;
         }
-        List<Waka> wakaList = elementStream
+        final List<Waka> wakaList = elementStream
                      .skip(SKIP_HEADER_NUM)
-                     .peek(e -> System.out.println("output : " + e.html()))
                      .map(e -> mapToWakaObject(selectBytd(e)))
                      .collect(Collectors.toList());
 
